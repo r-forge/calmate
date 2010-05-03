@@ -59,9 +59,6 @@ CalMaTeWeighted <- function (DataA, DataB, Refs = 0)
     }
   }
 
-
-#  inputData <- cbind(DataA, DataB)
-  
   inputData <- apply(cbind(DataA,DataB),1,list)
   inputRefs <- apply(Refs,1,list)
   input <- cbind(inputData, inputRefs);   

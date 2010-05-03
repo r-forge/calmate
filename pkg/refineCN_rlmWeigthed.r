@@ -1,7 +1,7 @@
 refineCN_rlmWeighted <- function (input, fB1=0.33,fB2=0.66)
 {
   
-  save(input, file="input.Rdata")
+#  save(input, file="input.Rdata")
   input <- input[[1]];
   inputData <- input$inputData[[1]];
   Refs <- input$inputRefs[[1]];  
@@ -29,7 +29,8 @@ refineCN_rlmWeighted <- function (input, fB1=0.33,fB2=0.66)
   fracB <- Tinput[2,Refs] / (Tinput[1,Refs] + Tinput[2,Refs]);
   naiveGenoDiff <- 2*(fracB < fB1) - 2*(fracB > fB2);
   AllHomo <- sum(abs(naiveGenoDiff))/2 == length(naiveGenoDiff);
-  #Dar la vuelta a Tinput
+
+  #Twist Tinput in case only one allele appears
   if (AllHomo==TRUE)
   {
     n=round(ncol(Tinput)/2);
@@ -58,7 +59,7 @@ refineCN_rlmWeighted <- function (input, fB1=0.33,fB2=0.66)
   P <- matrix(c(.5, .5, .5, -.5),2,2) %*% matrix(c(c(1,1), matDiff),2,2,byrow=T)
   Salida <- P%*%Tinput;
 
-  # Volver a dar la vuelta
+  # Setting Tinput as it was
   if (AllHomo==TRUE)
   {
     Salida[c(2,1),1:n] <- Salida[,1:n];
